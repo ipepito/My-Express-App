@@ -6,30 +6,45 @@
     <title>Static File</title>
 </head>
 <body>
+
     <h1>Hello from a static file!</h1>
 
-    <input type="text" id="itemInput" placeholder="Add an item">
-    <button onclick="submitData()">Add</button>
+    <form id="item-form">
+        <input type="text" id="item-input" placeholder="Add an item" required>
+        <button type="submit">Add</button>
+    </form>
 
-    <ul>
+    <ul id="item-list">
         <li>Apple</li>
         <li>Banana</li>
         <li>Orange</li>
-        
     </ul>
 
     <script>
-        // Simple function to send data to your server
-        async function submitData() {
-            const input = document.getElementById('itemInput');
-            const response = await fetch('/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: input.value })
-            });
-            const result = await response.text();
-            alert(result);
-        }
+       
+        const form = document.getElementById('item-form');
+        const input = document.getElementById('item-input');
+        const list = document.getElementById('item-list');
+
+        
+        form.addEventListener('submit', function(e) {
+           
+            e.preventDefault();
+
+            
+            const newItemText = input.value.trim();
+
+            if (newItemText !== "") {
+                
+                const li = document.createElement('li');
+                li.textContent = newItemText;
+
+                
+                list.appendChild(li);
+
+                
+                input.value = '';
+            }
+        });
     </script>
 </body>
-</html>
